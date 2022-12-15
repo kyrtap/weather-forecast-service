@@ -2,11 +2,9 @@ package me.brzoza.weatherforecastservice.models;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -29,22 +27,18 @@ public class CurrentWeather {
     private int humidity;
     private int visibility;
 
-    //private double windSpeed;
-    //private int windDegrees;
+    private double windSpeed;
+    private int windDegrees;
 
     private int cloudiness;
 
+    private Instant sunriseTime;
+    private Instant sunsetTime;
+
     private String id;
+    private String country;
     @JsonAlias("name")
     private String cityName;
-
-    /*
-    @JsonProperty("weather")
-    private void weatherDeserializer(Map<String, Object> weather) {
-        this.weather = weather;
-    }
-     */
-
 
     @JsonProperty("coord")
     private void coordDeserializer(Map<String, Object> coord) {
@@ -63,16 +57,21 @@ public class CurrentWeather {
         this.humidity = (Integer) main.get("humidity");
     }
 
-    /*
     @JsonProperty("wind")
     private void windDeserializer(Map<String, Object> wind) {
-        this.windSpeed = (Double) wind.get("speed");
+        this.windSpeed = ((Number) wind.get("speed")).doubleValue();
         this.windDegrees = (Integer) wind.get("deg");
     }
-     */
 
     @JsonProperty("clouds")
     private void cloudDeserializer(Map<String, Object> clouds) {
         this.cloudiness = (Integer) clouds.get("all");
+    }
+
+    @JsonProperty("sys")
+    private void sysDeserializer(Map<String, Object> sys) {
+        this.sunriseTime = Instant.ofEpochSecond(((Number) sys.get("sunrise")).longValue());
+        this.sunsetTime = Instant.ofEpochSecond(((Number) sys.get("sunset")).longValue());
+        this.country = (String) sys.get("country");
     }
 }
