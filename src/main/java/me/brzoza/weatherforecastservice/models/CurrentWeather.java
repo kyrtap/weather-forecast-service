@@ -34,8 +34,10 @@ public class CurrentWeather {
 
     private Instant sunriseTime;
     private Instant sunsetTime;
+    @JsonAlias("timezone")
+    private int timezoneOffset;
 
-    private String id;
+    private Integer id;
     private String country;
     @JsonAlias("name")
     private String cityName;
