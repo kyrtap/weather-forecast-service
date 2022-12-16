@@ -1,7 +1,8 @@
 package me.brzoza.weatherforecastservice.resources;
 
 import me.brzoza.weatherforecastservice.models.CurrentWeather;
-import me.brzoza.weatherforecastservice.models.WeatherForecast;
+import me.brzoza.weatherforecastservice.models.forecast.WeatherForecast;
+import me.brzoza.weatherforecastservice.models.pollution.AirPollution;
 import me.brzoza.weatherforecastservice.services.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,4 +29,8 @@ public class WeatherResource {
         return weatherService.getWeatherForecast(cityName, units, lang);
     }
 
+    @GetMapping("/pollution")
+    public AirPollution getAirPollution(@RequestParam double latitude, @RequestParam double longitude) {
+        return weatherService.getAirPollution(latitude, longitude);
+    }
 }

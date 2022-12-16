@@ -1,7 +1,8 @@
 package me.brzoza.weatherforecastservice.services;
 
+import me.brzoza.weatherforecastservice.models.pollution.AirPollution;
 import me.brzoza.weatherforecastservice.models.CurrentWeather;
-import me.brzoza.weatherforecastservice.models.WeatherForecast;
+import me.brzoza.weatherforecastservice.models.forecast.WeatherForecast;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -19,9 +20,7 @@ public class WeatherService {
 
 
     public CurrentWeather getCurrentWeather(String cityName, Optional<String> units, Optional<String> lang) {
-        String queryUrl = apiUrl;
-
-        queryUrl += "/weather?q=" + cityName + "&appid=" + apiKey;
+        String queryUrl = apiUrl + "/weather?q=" + cityName + "&appid=" + apiKey;
 
         if (units.isPresent())
             queryUrl += "&units=" + units;
@@ -35,9 +34,7 @@ public class WeatherService {
     }
 
     public WeatherForecast getWeatherForecast(String cityName, Optional<String> units, Optional<String> lang) {
-        String queryUrl = apiUrl;
-
-        queryUrl += "/forecast/daily?q=" + cityName + "&appid=" + apiKey;
+        String queryUrl = apiUrl + "/forecast/daily?q=" + cityName + "&appid=" + apiKey;
 
         if (units.isPresent())
             queryUrl += "&units=" + units;
@@ -48,5 +45,11 @@ public class WeatherService {
             queryUrl += "&lang=" + lang;
 
         return restTemplate.getForObject(queryUrl, WeatherForecast.class);
+    }
+
+    public AirPollution getAirPollution(double latitude, double longitude) {
+        String queryUrl = apiUrl + "/air_pollution?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey;
+
+        return restTemplate.getForObject(queryUrl, AirPollution.class);
     }
 }

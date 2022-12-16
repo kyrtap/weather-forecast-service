@@ -1,4 +1,4 @@
-package me.brzoza.weatherforecastservice.models;
+package me.brzoza.weatherforecastservice.models.forecast;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
